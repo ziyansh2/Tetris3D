@@ -1,4 +1,11 @@
-﻿using MyLib.Device;
+﻿//作成日：　2018.02.04
+//作成者：　柏
+//クラス内容：　方向チェック用親クラス
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
+using MyLib.Device;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,11 @@
-﻿using MyLib.Components.DrawComps;
+﻿//作成日：　2018.02.04
+//作成者：　柏
+//クラス内容：　エネルギー用クラス
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
+using MyLib.Components.DrawComps;
 using System;
 using System.Collections.Generic;
 using System.Linq;

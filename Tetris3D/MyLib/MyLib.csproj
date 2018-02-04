@@ -77,6 +77,8 @@
     <Compile Include="Components\TaskManager.cs" />
     <Compile Include="Components\UpdateComponent.cs" />
     <Compile Include="Device\2DRenderer.cs" />
+    <Compile Include="Device\3DRenderer.cs" />
+    <Compile Include="Device\Camera3D.cs" />
     <Compile Include="Device\Camera2D.cs" />
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\InputState.cs" />

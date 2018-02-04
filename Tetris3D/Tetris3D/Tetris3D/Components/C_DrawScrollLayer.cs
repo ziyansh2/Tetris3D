@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿//作成日：　2018.02.04
+//作成者：　柏
+//クラス内容：　Entity親クラス
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
+using Microsoft.Xna.Framework;
 using MyLib.Components;
 using MyLib.Device;
 using MyLib.Entitys;
