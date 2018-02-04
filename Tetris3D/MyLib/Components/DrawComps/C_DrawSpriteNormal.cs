@@ -10,7 +10,7 @@ using MyLib.Device;
 
 namespace MyLib.Components.DrawComps
 {
-    class C_DrawSpriteNormal : DrawComponent
+    public class C_DrawSpriteNormal : DrawComponent
     {
         private string name;
         private Vector2 position;

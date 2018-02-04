@@ -10,9 +10,8 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using MyLib.Scene;
-using Tetris3D.Scene;
 
-namespace Season.Scene
+namespace Tetris3D.Scene
 {
     class SceneManager
     {

@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace MyLib.Components.DrawComps
 {
-    class C_DrawAnimetion : DrawComponent
+    public class C_DrawAnimetion : DrawComponent
     {
         private Effect effect;
         private GraphicsDevice graphicsDevice;

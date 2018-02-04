@@ -15,7 +15,7 @@ using System.Text;
 
 namespace MyLib.Components.ColliderComps
 {
-    class C_Collider_Line : ColliderComponent
+    public class C_Collider_Line : ColliderComponent
     {
         public Vector2 Position1;
         public Vector2 Position2;

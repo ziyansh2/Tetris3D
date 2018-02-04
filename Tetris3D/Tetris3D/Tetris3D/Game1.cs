@@ -5,77 +5,109 @@
 //名前：　　　日付：　　　内容：
 //名前：　　　日付：　　　内容：
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using MyLib.Components;
+using MyLib.Device;
+using MyLib.Entitys;
+using Tetris3D.Def;
+using Tetris3D.Scene;
+using Tetris3D.Scene.ScenePages;
 
 namespace Tetris3D
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphicsDeviceManager;
+        private GameDevice gameDevice;
+        private SceneManager sceneManager;
+        private Camera2D camera2D;
 
-        public Game1() {
-            graphics = new GraphicsDeviceManager(this);
+        public Game1()
+        {
+            graphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphicsDeviceManager.PreferredBackBufferHeight = (int)Parameter.ScreenSize.Y;
+            graphicsDeviceManager.PreferredBackBufferWidth = (int)Parameter.ScreenSize.X;
+
+
+            graphicsDeviceManager.IsFullScreen = false;
         }
 
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            gameDevice = new GameDevice(Content, graphicsDeviceManager.GraphicsDevice);
+            camera2D = new Camera2D(GraphicsDevice.Viewport, Parameter.StageSize);
 
+            //シーン設定
+            sceneManager = new SceneManager();
+            sceneManager.Add(E_Scene.LOADING, new Loading(gameDevice));
+            sceneManager.Add(E_Scene.TITLE, new Title(gameDevice));
+            sceneManager.Add(E_Scene.GAMEPLAY, new GamePlay(gameDevice));
+            sceneManager.Add(E_Scene.OPERATE, new Operate(gameDevice));
+            sceneManager.Add(E_Scene.STAFFROLL, new StaffRoll(gameDevice));
+            sceneManager.Add(E_Scene.ENDING, new Ending(gameDevice));
+            sceneManager.Add(E_Scene.CLEAR, new Clear(gameDevice));
+            sceneManager.Change(E_Scene.LOADING);
+
+            Window.Title = "Tetris3D";
             base.Initialize();
         }
 
 
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-        }
+        protected override void LoadContent() { }
 
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            gameDevice.UnLoad();
+            TaskManager.CloseAllTask();
+            TaskManager.Update();
+            EntityManager.Clear();
         }
 
 
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) this.Exit();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.Escape)
+                )
+            {
+                UnloadContent();
+                Exit();
+            }
 
-            // TODO: Add your update logic here
+            gameDevice.Update();
+            sceneManager.Update(gameTime);
+            TaskManager.Update();
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
+
+            TaskManager.Draw();
+
+            Renderer_2D.Begin();
+            sceneManager.Draw();
+            Renderer_2D.End();
+
+            //３D向けの設定変更
+            //SpriteBatchが変更した設定を元に戻す。（今回はカリングの設定のみでOK）
+            //GraphicsDevice.BlendState = BlendState.Opaque;
+            //GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
+            gameDevice.GetParticleGroup.Draw();
+
+
         }
     }
 }

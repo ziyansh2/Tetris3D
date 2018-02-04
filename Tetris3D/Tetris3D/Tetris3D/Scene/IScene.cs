@@ -6,10 +6,8 @@
 //名前：　　　日付：　　　内容：
 
 using Microsoft.Xna.Framework;
-using MyLib.Device;
-using Tetris3D.Scene;
 
-namespace Season.Scene
+namespace Tetris3D.Scene
 {
     public interface IScene
     {

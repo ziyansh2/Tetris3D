@@ -12,7 +12,7 @@ using MyLib.Entitys;
 
 namespace MyLib.Components.ColliderComps
 {
-    class C_Collider_Circle : ColliderComponent
+    public class C_Collider_Circle : ColliderComponent
     {
         private C_DrawSpriteAutoSize drawCircle;
         private Entity drawEntity;

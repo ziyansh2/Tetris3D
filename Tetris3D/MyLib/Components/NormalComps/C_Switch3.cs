@@ -13,13 +13,13 @@ using System.Text;
 
 namespace MyLib.Components.NormalComps
 {
-    enum eSwitchDirect {
+    public enum eSwitchDirect {
         Left = -1,
         None,
         Right,
     }
 
-    class C_Switch3 : Component
+    public class C_Switch3 : Component
     {
         private eSwitchDirect switchValue;
         private eSwitchDirect priviousValue;

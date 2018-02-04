@@ -15,7 +15,7 @@ using System.Text;
 
 namespace MyLib.Components.DrawComps
 {
-    class C_DrawSpriteAutoSize : DrawComponent
+    public class C_DrawSpriteAutoSize : DrawComponent
     {
         private Vector2 size;
         private string name;
