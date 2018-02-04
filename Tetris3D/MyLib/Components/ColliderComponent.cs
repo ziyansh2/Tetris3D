@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿//作成日：　2018.02.04
+//作成者：　柏
+//クラス内容：　当たり判定Component親クラス
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
+using Microsoft.Xna.Framework;
 using MyLib.Components.ColliderComps;
 using MyLib.Entitys;
 using MyLib.Utility;

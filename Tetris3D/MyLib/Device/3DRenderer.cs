@@ -1,12 +1,14 @@
-﻿//作成日：　2017.02.07
+﻿//作成日：　2018.02.04
+//作成者：　柏
 //クラス内容：　3Dモデル管理クラス
 //修正内容リスト：
-//2017.03.07: リファクタリング(リソースいじる部分を抽出)
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace Shooting3D.Device
+namespace MyLib.Device
 {
     class Modeler
     {
@@ -18,15 +20,15 @@ namespace Shooting3D.Device
         /// <param name="camera">カメラ</param>
         /// <param name="model">モデル</param>
         /// <param name="world">ワールド座標</param>
-        public void DrawModel(Camera camera, Model model, Matrix world) {
+        public void DrawModel(Model model, Matrix world) {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
 
             foreach (ModelMesh mesh in model.Meshes) {
                 foreach (BasicEffect be in mesh.Effects) {
                     be.EnableDefaultLighting();
-                    be.Projection = camera.Projection;
-                    be.View = camera.View;
+                    be.Projection = Camera3D.GetProjection();
+                    be.View = Camera3D.GetView();
                     be.World = world * mesh.ParentBone.Transform;
                 }
                 mesh.Draw();

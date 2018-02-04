@@ -1,8 +1,8 @@
-﻿//作成日：　2017.10.11
+﻿//作成日：　2018.02.04
 //作成者：　柏
-//クラス内容：　2Dカメラクラス
+//クラス内容：　3Dカメラクラス
 //修正内容リスト：
-//名前：柏　　　日付：2017.11.20　　　内容：メソッドのstatic化
+//名前：　　　日付：　　　内容：
 //名前：　　　日付：　　　内容：
 
 
@@ -15,7 +15,7 @@ using System.Text;
 
 namespace MyLib.Device
 {
-    public class Camera2D
+    public class Camera3D
     {
         private static Vector2 startPosition;       //targetは左上の（0,0）から描画したい座標
         private static Vector2 targetForcus;
@@ -35,7 +35,7 @@ namespace MyLib.Device
         private static Vector2 offsetDirect;
 
 
-        public Camera2D(Viewport viewport, Vector2 stageS) {
+        public Camera3D(Viewport viewport, Vector2 stageS) {
             stageSize = stageS;
             screenSize = new Vector2(viewport.Width, viewport.Height);
             offsetDirect = new Vector2(-viewport.Width / 4, 0);

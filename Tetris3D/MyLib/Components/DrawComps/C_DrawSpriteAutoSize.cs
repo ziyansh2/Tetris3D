@@ -1,4 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿//作成日：　2017.11.20
+//作成者：　柏
+//クラス内容：　描画用Component - 2DSpriteWithAutoSize
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
+
+using Microsoft.Xna.Framework;
 using MyLib.Device;
 using System;
 using System.Collections.Generic;
