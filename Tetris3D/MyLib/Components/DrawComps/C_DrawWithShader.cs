@@ -17,7 +17,7 @@ using System.Text;
 
 namespace MyLib.Components.DrawComps
 {
-    class C_DrawWithShader : DrawComponent
+    public class C_DrawWithShader : DrawComponent
     {
         private Effect effect;
         private GraphicsDevice graphicsDevice;

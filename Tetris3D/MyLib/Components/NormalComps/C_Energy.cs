@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MyLib.Components.NormalComps
 {
-    class C_Energy : Component
+    public class C_Energy : Component
     {
         private float limitEnergy;
         private float nowEnergy;

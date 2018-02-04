@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MyLib.Components
 {
-    class MoveComponent : UpdateComponent
+    public class MoveComponent : UpdateComponent
     {
         public float speed;
         public Vector2 velocity;

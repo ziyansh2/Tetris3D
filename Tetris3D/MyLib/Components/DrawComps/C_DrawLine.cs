@@ -15,7 +15,7 @@ using System.Text;
 
 namespace MyLib.Components.DrawComps
 {
-    class C_DrawLine : DrawComponent
+    public class C_DrawLine : DrawComponent
     {
         private List<Vector2> linePoint;
 

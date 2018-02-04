@@ -17,7 +17,7 @@ using System.Text;
 
 namespace MyLib.Components.DrawComps
 {
-    class C_DrawEnergyBar : DrawComponent
+    public class C_DrawEnergyBar : DrawComponent
     {
         private C_Energy energyBar;
         private float offsetY;
