@@ -12,15 +12,12 @@ namespace MyLib.Device
 {
     public class Modeler
     {
-        public Modeler() { }
-
         /// <summary>
         /// Xna固有機能利用し、モデルを描画
         /// </summary>
-        /// <param name="camera">カメラ</param>
         /// <param name="model">モデル</param>
         /// <param name="world">ワールド座標</param>
-        public void DrawModel(Model model, Matrix world) {
+        public static void DrawModel(Model model, Matrix world) {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
 
