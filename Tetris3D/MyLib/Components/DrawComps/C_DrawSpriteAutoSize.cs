@@ -42,7 +42,8 @@ namespace MyLib.Components.DrawComps
         public override void Draw() {
             Renderer_2D.Begin(Camera2D.GetTransform());
 
-            Vector2 position = entity.transform.Position + offset;
+            Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
+            position += offset;
             Vector2 imgSize = ResouceManager.GetTextureSize(name);
             Rectangle rect = new Rectangle(0, 0, (int)imgSize.X, (int)imgSize.Y);
             Vector2 drawSize = new Vector2(size.X / imgSize.X, size.Y / imgSize.Y) * 2;

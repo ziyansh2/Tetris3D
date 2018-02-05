@@ -136,7 +136,8 @@ namespace MyLib.Components
             if (isLocal) {
                 float radian = MathHelper.ToRadians(entity.transform.Angle);
                 Vector2 direction = new Vector2((float)Math.Cos(radian), (float)Math.Sin(radian));
-                centerPosition = entity.transform.Position + Method.RightAngleMove(direction, offsetPosition.Length());
+                Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
+                centerPosition = position + Method.RightAngleMove(direction, offsetPosition.Length());
                 centerPosition += IsRight()?  direction * offsetPosition.X : -direction * offsetPosition.X;
             }
         }
@@ -331,8 +332,9 @@ namespace MyLib.Components
             base.Active();
             //TODO 更新コンテナに自分を入れる
 
-            if (isLocal) { 
-                centerPosition = entity.transform.Position + offsetPosition;
+            if (isLocal) {
+                Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
+                centerPosition = position + offsetPosition;
             }
         }
 

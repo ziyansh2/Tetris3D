@@ -140,7 +140,7 @@ namespace MyLib.Components.DrawComps
             if (motion == null) { return; }
 
             float radian = MathHelper.ToRadians(entity.transform.Angle);
-            Vector2 position = entity.transform.Position;
+            Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
             Vector2 direction = new Vector2((float)Math.Cos(radian), (float)Math.Sin(radian));
 
             if (isShaderOn)

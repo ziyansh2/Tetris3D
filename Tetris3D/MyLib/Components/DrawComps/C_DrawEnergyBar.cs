@@ -37,7 +37,7 @@ namespace MyLib.Components.DrawComps
             Vector2 imgSize = ResouceManager.GetTextureSize(name);
             Rectangle rect = new Rectangle(0, 0, (int)(imgSize.X * energyBar.GetRate()), (int)imgSize.Y);
 
-            Vector2 position = entity.transform.Position;
+            Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
             while (entity.transform.Angle < 0) { entity.transform.Angle += 360; }
             float angle = entity.transform.Angle;
             if (angle % 180 == 0) { angle--; }

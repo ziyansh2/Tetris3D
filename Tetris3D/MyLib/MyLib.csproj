@@ -68,11 +68,13 @@
     <Compile Include="Components\DrawComps\C_DrawAnimetion.cs" />
     <Compile Include="Components\DrawComps\C_DrawEnergyBar.cs" />
     <Compile Include="Components\DrawComps\C_DrawLine.cs" />
+    <Compile Include="Components\DrawComps\C_DrawModel.cs" />
     <Compile Include="Components\DrawComps\C_DrawSpriteAutoSize.cs" />
     <Compile Include="Components\DrawComps\C_DrawSpriteNormal.cs" />
     <Compile Include="Components\DrawComps\C_DrawWithShader.cs" />
     <Compile Include="Components\MoveComponent.cs" />
     <Compile Include="Components\NormalComps\C_Energy.cs" />
+    <Compile Include="Components\NormalComps\C_Model.cs" />
     <Compile Include="Components\NormalComps\C_Switch3.cs" />
     <Compile Include="Components\TaskManager.cs" />
     <Compile Include="Components\UpdateComponent.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Entitys\AnimData.cs" />
     <Compile Include="Entitys\Entity.cs" />
     <Compile Include="Entitys\EntityManager.cs" />
+    <Compile Include="Entitys\Transform.cs" />
     <Compile Include="Entitys\Transform2D.cs" />
     <Compile Include="InputParameter.cs" />
     <Compile Include="LibParameter.cs" />

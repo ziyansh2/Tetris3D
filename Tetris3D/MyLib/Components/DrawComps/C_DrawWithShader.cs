@@ -90,7 +90,8 @@ namespace MyLib.Components.DrawComps
 
             float radian = MathHelper.ToRadians(entity.transform.Angle);
             Vector2 direction = new Vector2((float)Math.Cos(radian), (float)Math.Sin(radian));
-            Vector2 drawPosition = entity.transform.Position + Camera2D.GetOffsetPosition() + offsetPosition;
+            Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
+            Vector2 drawPosition = position + Camera2D.GetOffsetPosition() + offsetPosition;
             Vector3 drawP3 = new Vector3(drawPosition, 0);
 
             VertexUpdate(drawP3);

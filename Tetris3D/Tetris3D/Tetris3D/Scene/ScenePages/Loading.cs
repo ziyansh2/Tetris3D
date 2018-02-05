@@ -55,6 +55,7 @@ namespace Tetris3D.Scene.ScenePages
                 { "bgm", "./MP3/" },
                 { "se", "./WAV/" },
                 { "font", "./FONT/" },
+                { "model", "./MODEL/" },
             };
             resourceLoader = new ResouceLoader(resourceManager, ResouceList());
 
