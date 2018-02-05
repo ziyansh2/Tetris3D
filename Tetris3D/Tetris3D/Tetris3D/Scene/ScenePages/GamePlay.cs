@@ -13,6 +13,9 @@ using MyLib.Entitys;
 using MyLib.Components;
 using Tetris3D.Def;
 using MyLib.Components.DrawComps;
+using MyLib.Components.NormalComps;
+using System;
+using MyLib.Utility;
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -28,6 +31,9 @@ namespace Tetris3D.Scene.ScenePages
         private int stageNo;
 
         private Entity focus;
+
+        private float cameraAngle;
+
 
         public GamePlay(GameDevice gameDevice) {
             this.gameDevice = gameDevice;
@@ -46,8 +52,11 @@ namespace Tetris3D.Scene.ScenePages
             isPause = false;
             GameConst.Initialize();
 
-            focus = Entity.CreateEntity("Focus", "Forcus", new Transform2D());
+            focus = Entity.CreateEntity("Focus", "Forcus", new Transform());
+            focus.transform.Position = new Vector3(0, 0, 0);
             focus.Active();
+
+            cameraAngle = 0;
 
             //Debug用
             DebugInitialize();
@@ -55,20 +64,26 @@ namespace Tetris3D.Scene.ScenePages
 
         private void DebugInitialize() {
             //ShaderTest用
-            //CreatShaderTest();
+            CreatShaderTest();
 
-            //StageCheck
-            if (inputState.IsDown(Keys.W, Buttons.LeftShoulder)) {
-                Camera2D.ZoomIn();
-            }
-            if (inputState.IsDown(Keys.S, Buttons.RightShoulder)) {
-                Camera2D.ZoomOut();
-            }
+            //CreateBox
+            Entity box = Entity.CreateEntity("Box", "Box", new Transform());
+            box.RegisterComponent(new C_Model("Box"));
+            box.RegisterComponent(new C_DrawModel());
+
+            //CreateStage
+            //Entity pedestal = Entity.CreateEntity("Pedestal", "Pedestal", new Transform());
+            //pedestal.RegisterComponent(new C_Model("Pedestal"));
+            //pedestal.RegisterComponent(new C_DrawModel());
+
+
+            
+
         }
 
         private void CreatShaderTest() {
-            Entity test = Entity.CreateEntity("Test","Test", new Transform2D());
-            test.transform.Position = new Vector2(1000, 1200);
+            Entity test = Entity.CreateEntity("Test","Test", new Transform());
+            test.transform.Position = new Vector3(0, 0,0);
 
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
@@ -98,9 +113,38 @@ namespace Tetris3D.Scene.ScenePages
                 Initialize();
                 return;
             }
-            if (EntityManager.GetEntityCount() > 0) {
-                Camera2D.Update(focus.transform.Position);
+            Vector2 position = new Vector2(focus.transform.Position.X, focus.transform.Position.Y);
+            Camera2D.Update(position);
+
+
+
+            //StageCheck
+            if (inputState.IsDown(Keys.W, Buttons.LeftShoulder)) {
+                //Camera2D.ZoomIn();
             }
+            if (inputState.IsDown(Keys.S, Buttons.RightShoulder)) {
+                //Camera2D.ZoomOut();
+            }
+
+
+            //CameraMoveCheck
+            if (inputState.IsDown(Keys.Left))
+            {
+                cameraAngle += 0.05f;
+            }
+            if (inputState.IsDown(Keys.Right))
+            {
+                cameraAngle -= 0.05f;
+            }
+
+            cameraAngle = Method.AngleClamp(cameraAngle);
+
+            Vector3 cameraPosition = new Vector3((float)Math.Cos(cameraAngle),  0, (float)Math.Sin(cameraAngle)) * Parameter.DistanceFromStage;
+            Camera3D.Update(cameraPosition);
+
+            Console.WriteLine(cameraPosition);
+
+
             Sound.PlayBGM("GamePlay");
         }
 

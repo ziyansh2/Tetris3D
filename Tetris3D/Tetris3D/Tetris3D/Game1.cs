@@ -23,6 +23,7 @@ namespace Tetris3D
         private GraphicsDeviceManager graphicsDeviceManager;
         private GameDevice gameDevice;
         private SceneManager sceneManager;
+        private Camera3D camera3D;
         private Camera2D camera2D;
 
         public Game1()
@@ -41,6 +42,7 @@ namespace Tetris3D
         protected override void Initialize()
         {
             gameDevice = new GameDevice(Content, graphicsDeviceManager.GraphicsDevice);
+            camera3D = new Camera3D(GraphicsDevice.Viewport, Parameter.StageSize);
             camera2D = new Camera2D(GraphicsDevice.Viewport, Parameter.StageSize);
 
             //シーン設定
@@ -101,13 +103,11 @@ namespace Tetris3D
             Renderer_2D.End();
 
             //３D向けの設定変更
-            //SpriteBatchが変更した設定を元に戻す。（今回はカリングの設定のみでOK）
-            //GraphicsDevice.BlendState = BlendState.Opaque;
-            //GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            //SpriteBatchが変更した設定を元に戻す。
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
             gameDevice.GetParticleGroup.Draw();
-
-
         }
     }
 }

@@ -16,14 +16,14 @@ namespace MyLib.Entitys
     
     public class Entity
     {
-        public Transform2D transform { get; set; }
+        public Transform transform { get; set; }
         private string tag;
         private string name;
         private bool isActive;
         private List<Component> componentList;
         private Entity parent;
 
-        private Entity(string name, string tag,Transform2D transform) {
+        private Entity(string name, string tag,Transform transform) {
             this.tag = tag;
             this.name = name;
             this.transform = transform;
@@ -36,7 +36,7 @@ namespace MyLib.Entitys
         }
 
         public Entity GetParent() { return parent; } 
-        public static Entity CreateEntity(string name,string tag,Transform2D trans)
+        public static Entity CreateEntity(string name,string tag,Transform trans)
         {
             var entity = new Entity(name, tag, trans);
             EntityManager.Register(entity);

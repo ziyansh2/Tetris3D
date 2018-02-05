@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace MyLib.Device
 {
-    class Modeler
+    public class Modeler
     {
         public Modeler() { }
 

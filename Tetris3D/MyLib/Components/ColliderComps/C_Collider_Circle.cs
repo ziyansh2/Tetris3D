@@ -25,16 +25,16 @@ namespace MyLib.Components.ColliderComps
             bool isLocal = true
             ) : base (colliderName, offsetPosition, radius, collisionType, eCollitionForm.Circle, isLocal)
         {
-            drawEntity = Entity.CreateEntity("Empty", "Empty", new Transform2D());
+            drawEntity = Entity.CreateEntity("Empty", "Empty", new Transform());
             InitializeCollision();
         }
 
         public override void Update()
         {
             base.Update();
-                       
+
             //if (isLocal) { return; }
-            drawEntity.transform.Position = centerPosition;
+            drawEntity.transform.Position = new Vector3(centerPosition, 0);
             drawCircle.SetSize(Vector2.One * radius);
         }
 
@@ -72,7 +72,8 @@ namespace MyLib.Components.ColliderComps
                 drawCircle = new C_DrawSpriteAutoSize("CollisionArea", offsetPosition, Vector2.One * radius, 100);
                 drawEntity.RegisterComponent(drawCircle);
             }
-            centerPosition = entity.transform.Position + offsetPosition;
+            Vector2 position = new Vector2(entity.transform.Position.X, entity.transform.Position.Y);
+            centerPosition = position + offsetPosition;
         }
 
         public override void DeActive() {

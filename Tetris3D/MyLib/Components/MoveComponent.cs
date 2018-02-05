@@ -16,9 +16,9 @@ namespace MyLib.Components
     public class MoveComponent : UpdateComponent
     {
         public float speed;
-        public Vector2 velocity;
+        public Vector3 velocity;
 
-        public MoveComponent(float speed, Vector2 velocity) {
+        public MoveComponent(float speed, Vector3 velocity) {
             this.speed = speed;
             this.velocity = velocity;
         }

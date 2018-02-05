@@ -35,7 +35,7 @@ namespace MyLib.Components.ColliderComps
             this.Position2 = Position2;
             centerPosition = (Position1 + Position2) / 2;
 
-            drawEntity = Entity.CreateEntity("Empty", "Empty", new Transform2D());
+            drawEntity = Entity.CreateEntity("Empty", "Empty", new Transform());
             InitializeCollision();
         }
 
