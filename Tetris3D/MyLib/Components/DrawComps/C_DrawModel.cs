@@ -12,7 +12,7 @@ namespace MyLib.Components.DrawComps
     {
         private C_Model model;
 
-        public C_DrawModel(float alpha = 1, float depth = 100)
+        public C_DrawModel(float alpha = 1, float depth = -1)
         {
             this.alpha = alpha;
             this.depth = depth;

@@ -43,7 +43,7 @@ namespace MyLib.Device
                 MathHelper.PiOver4, //標準視覚
                 screenSize.X / screenSize.Y, //幅と高さの比
                 1,       //near
-                3000     //far
+                30000     //far
             );
             view = Matrix.Identity;
 

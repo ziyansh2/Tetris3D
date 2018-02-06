@@ -152,11 +152,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="IMAGE\Page_Title.png">
-      <Name>Page_Title</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMAGE\TestImg.png">
@@ -302,6 +297,13 @@
     </Compile>
     <Compile Include="IMAGE\Particles\P_Square.png">
       <Name>P_Square</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IMAGE\Page_Title.jpg">
+      <Name>Page_Title</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

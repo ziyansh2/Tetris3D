@@ -35,7 +35,8 @@ namespace Tetris3D.Scene.ScenePages
         private Entity focus;
         private StageData stage;
 
-        private float cameraAngle;
+        private float cameraAngleXZ;
+        private float cameraAngleXY;
 
 
         public GamePlay(GameDevice gameDevice) {
@@ -61,7 +62,8 @@ namespace Tetris3D.Scene.ScenePages
             focus.transform.Position = new Vector3(0, 0, 0);
             focus.Active();
 
-            cameraAngle = 0;
+            cameraAngleXZ = 0;
+            cameraAngleXY = 0;
 
             StageData.InitializeStage();
 
@@ -82,12 +84,6 @@ namespace Tetris3D.Scene.ScenePages
             C_DrawStage draw = new C_DrawStage();
             draw.Active();
             TaskManager.AddTask(draw);
-
-            //CreateStage
-            //Entity pedestal = Entity.CreateEntity("Pedestal", "Pedestal", new Transform());
-            //pedestal.RegisterComponent(new C_Model("Pedestal"));
-            //pedestal.RegisterComponent(new C_DrawModel());
-
         }
 
         private void CreatShaderTest() {
@@ -137,18 +133,18 @@ namespace Tetris3D.Scene.ScenePages
 
 
             //CameraMoveCheck
-            if (inputState.IsDown(Keys.Left))
-            {
-                cameraAngle += 0.05f;
-            }
-            if (inputState.IsDown(Keys.Right))
-            {
-                cameraAngle -= 0.05f;
-            }
+            if (inputState.IsDown(Keys.Left)) { cameraAngleXZ += 0.05f; }
+            if (inputState.IsDown(Keys.Right)) { cameraAngleXZ -= 0.05f; }
+            if (inputState.IsDown(Keys.Up)) { cameraAngleXY += 0.05f; }
+            if (inputState.IsDown(Keys.Down)) { cameraAngleXY -= 0.05f; }
 
-            cameraAngle = Method.AngleClamp(cameraAngle);
+            //cameraAngle = Method.AngleClamp(cameraAngle);
 
-            Vector3 cameraPosition = new Vector3((float)Math.Cos(cameraAngle), (float)Math.Cos(cameraAngle), (float)Math.Sin(cameraAngle)) * Parameter.DistanceFromStage;
+            Vector3 cameraPosition = new Vector3(
+                (float)Math.Cos(cameraAngleXZ), 
+                (float)Math.Sin(cameraAngleXY),
+                (float)Math.Sin(cameraAngleXZ)) * Parameter.DistanceFromStage;
+
             Camera3D.Update(cameraPosition);
 
             Console.WriteLine(cameraPosition);

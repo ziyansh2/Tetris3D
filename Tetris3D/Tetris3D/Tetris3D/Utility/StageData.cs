@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using MyLib.Components;
+using MyLib.Components.DrawComps;
+using MyLib.Components.NormalComps;
+using MyLib.Entitys;
 using MyLib.Utility;
 using System;
 using System.Collections.Generic;
@@ -21,8 +24,11 @@ namespace Tetris3D.Utility
 
         public static void InitializeStage() {
             Method.MyForeach((x, y, z) => {
-                stageData[z, y, x] = 0;
+                stageData[z, y, x] = 1;
             }, Vector3.One * maxIndex);
+
+            stageData[0, 0, 0] = 0;
+            stageData[1, 0, 0] = 0;
         }
 
         public static void SetBlockOn(int x, int y, int z) {
