@@ -23,6 +23,17 @@ namespace MyLib.Utility
             }
         }
 
+        public static void MyForeach(Action<int, int, int> action, Vector3 xyz) {
+            for (int z = 0; z < xyz.Z; z++) {
+                for (int y = 0; y < xyz.Y; y++) {
+                    for (int x = 0; x < xyz.X; x++) {
+                        action(x, y, z);
+                    }
+                }
+            }
+        }
+
+
         //点の四角い内判定（外積法）
         public static bool IsInScale(Vector2 position, Vector2 leftTop, Vector2 scaleXY)
         {

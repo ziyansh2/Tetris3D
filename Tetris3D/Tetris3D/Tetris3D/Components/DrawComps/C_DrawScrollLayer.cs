@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using Tetris3D.Def;
 
-namespace Tetris3D.Components
+namespace Tetris3D.Components.DrawComps
 {
     class C_DrawScrollLayer : DrawComponent
     {

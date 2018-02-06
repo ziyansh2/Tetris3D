@@ -10,20 +10,17 @@ namespace MyLib.Components.DrawComps
 {
     public class C_DrawModel : DrawComponent
     {
-        private Modeler modeler;
         private C_Model model;
 
-        public C_DrawModel(float alpha = 1, float depth = 100)
+        public C_DrawModel(float alpha = 1, float depth = -1)
         {
             this.alpha = alpha;
             this.depth = depth;
-
-            modeler = new Modeler();
         }
 
         public override void Draw() {
             if (model == null) { return; }
-            modeler.DrawModel(model.GetModel, model.GetWorld());
+            Modeler.DrawModel(model.GetModel, model.GetWorld());
         }
 
         public override void Active()

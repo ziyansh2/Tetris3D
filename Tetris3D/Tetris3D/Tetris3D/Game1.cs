@@ -106,7 +106,7 @@ namespace Tetris3D
             //SpriteBatch‚ª•ÏX‚µ‚½İ’è‚ğŒ³‚É–ß‚·B
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
+            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             gameDevice.GetParticleGroup.Draw();
         }
     }
