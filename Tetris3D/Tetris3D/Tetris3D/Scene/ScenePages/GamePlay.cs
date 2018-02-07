@@ -3,6 +3,7 @@
 //クラス内容：　GamePlayシーン
 //修正内容リスト：
 //名前：柏　　　日付：20171011　　　内容：カメラ対応
+//名前：宮崎　　日付：20180205　　　内容：カメラのをCameraManagerに移した
 //名前：　　　日付：　　　内容：
 
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using MyLib.Components;
 using Tetris3D.Def;
 using MyLib.Components.DrawComps;
 using MyLib.Components.NormalComps;
+using Tetris3D.Components;
 using System;
 using MyLib.Utility;
 
@@ -32,7 +34,10 @@ namespace Tetris3D.Scene.ScenePages
 
         private Entity focus;
 
-        private float cameraAngle;
+        private _3DCameraManager cameraManager; 
+
+        //test用
+        private Vector3 boxPosi;
 
 
         public GamePlay(GameDevice gameDevice) {
@@ -56,10 +61,10 @@ namespace Tetris3D.Scene.ScenePages
             focus.transform.Position = new Vector3(0, 0, 0);
             focus.Active();
 
-            cameraAngle = 0;
-
             //Debug用
             DebugInitialize();
+
+            cameraManager = new _3DCameraManager(gameDevice);
         }
 
         private void DebugInitialize() {
@@ -71,13 +76,12 @@ namespace Tetris3D.Scene.ScenePages
             box.RegisterComponent(new C_Model("Box"));
             box.RegisterComponent(new C_DrawModel());
 
+            boxPosi = box.transform.Position;
+
             //CreateStage
             //Entity pedestal = Entity.CreateEntity("Pedestal", "Pedestal", new Transform());
             //pedestal.RegisterComponent(new C_Model("Pedestal"));
             //pedestal.RegisterComponent(new C_DrawModel());
-
-
-            
 
         }
 
@@ -128,21 +132,7 @@ namespace Tetris3D.Scene.ScenePages
 
 
             //CameraMoveCheck
-            if (inputState.IsDown(Keys.Left))
-            {
-                cameraAngle += 0.05f;
-            }
-            if (inputState.IsDown(Keys.Right))
-            {
-                cameraAngle -= 0.05f;
-            }
-
-            cameraAngle = Method.AngleClamp(cameraAngle);
-
-            Vector3 cameraPosition = new Vector3((float)Math.Cos(cameraAngle),  0, (float)Math.Sin(cameraAngle)) * Parameter.DistanceFromStage;
-            Camera3D.Update(cameraPosition);
-
-            Console.WriteLine(cameraPosition);
+            cameraManager.Update();
 
 
             Sound.PlayBGM("GamePlay");
@@ -154,6 +144,9 @@ namespace Tetris3D.Scene.ScenePages
         public void Draw() {
             //Renderer_2D.DrawString("ObjectsCount:" + EntityManager.GetEntityCount(), new Vector2(10, 520), Color.Red, 0.5f);
             //Renderer_2D.DrawString("ParticlesCount:" + gameDevice.GetParticlesCount(), new Vector2(10, 550), Color.Red, 0.5f);
+            //Renderer_2D.DrawString("cameraPosition:" + new Vector3(Camera3D.GetView().Translation.X, Camera3D.GetView().Translation.Y, Camera3D.GetView().Translation.Y), new Vector2(700, 100), Color.White);
+            //Renderer_2D.DrawString("boxPosition:" + boxPosi, new Vector2(700, 150), Color.White);
+            //Renderer_2D.DrawString("angle:" + cameraAngle, new Vector2(700, 200), Color.White);
         }
 
 

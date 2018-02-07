@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\C_DrawScrollLayer.cs" />
+    <Compile Include="Components\3DCameraManager.cs" />
     <Compile Include="Def\GameConst.cs" />
     <Compile Include="Def\Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +92,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Components\DrawComps\" />
+    <Folder Include="Components\UpdateComps\" />
     <Folder Include="Scene\Creators\" />
     <Folder Include="State\" />
     <Folder Include="Utility\" />
