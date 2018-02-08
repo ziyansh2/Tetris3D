@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿//作成日：　2018.02.07
+//作成者：　柏
+//クラス内容：　Modelを描画する
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
 using MyLib.Components.NormalComps;
 using MyLib.Device;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MyLib.Components.DrawComps
 {
