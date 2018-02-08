@@ -23,7 +23,7 @@ namespace MyLib.Device
 
             foreach (ModelMesh mesh in model.Meshes) {
                 foreach (BasicEffect be in mesh.Effects) {
-                    be.EnableDefaultLighting();
+                    be.EnableDefaultLighting(); 
                     be.Projection = Camera3D.GetProjection();
                     be.View = Camera3D.GetView();
                     be.World = world * mesh.ParentBone.Transform;

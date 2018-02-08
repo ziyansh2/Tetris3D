@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Components\DrawComps\C_DrawScrollLayer.cs" />
     <Compile Include="Components\DrawComps\C_DrawStage.cs" />
+    <Compile Include="Components\UpdateComps\C_BoxMoveUpdate.cs" />
     <Compile Include="Utility\StageData.cs" />
     <Compile Include="Def\GameConst.cs" />
     <Compile Include="Def\Parameter.cs" />
@@ -94,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\NormalComps\" />
-    <Folder Include="Components\UpdateComps\" />
     <Folder Include="Scene\Creators\" />
     <Folder Include="State\" />
   </ItemGroup>

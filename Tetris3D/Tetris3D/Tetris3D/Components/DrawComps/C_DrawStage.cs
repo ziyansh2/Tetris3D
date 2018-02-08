@@ -1,14 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿//作成日：　2018.02.07
+//作成者：　柏
+//クラス内容：　StageDataにより描画
+//修正内容リスト：
+//名前：　　　日付：　　　内容：
+//名前：　　　日付：　　　内容：
+
+using Microsoft.Xna.Framework;
 using MyLib.Components;
 using MyLib.Components.DrawComps;
 using MyLib.Components.NormalComps;
 using MyLib.Device;
 using MyLib.Entitys;
 using MyLib.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Tetris3D.Def;
 using Tetris3D.Utility;
 
@@ -50,7 +53,7 @@ namespace Tetris3D.Components.DrawComps
             }, Vector3.One * maxIndex);
 
             pedestal = Entity.CreateEntity("Pedestal", "Pedestal", new Transform());
-            pedestal.transform.Position = new Vector3(1, -2, -2 ) * Parameter.BoxSize;
+            pedestal.transform.Position = new Vector3(2.5f, -3.5f, 0 ) * Parameter.BoxSize;
             pedestal.RegisterComponent(new C_Model("Pedestal"));
             pedestal.RegisterComponent(new C_DrawModel());
         }

@@ -1,8 +1,8 @@
-﻿//作成日：　2017.10.04
+﻿//作成日：　2018.02.04
 //作成者：　柏
 //クラス内容：　GamePlayシーン
 //修正内容リスト：
-//名前：柏　　　日付：20171011　　　内容：カメラ対応
+//名前：　　　日付：　　　内容：
 //名前：　　　日付：　　　内容：
 
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ using System;
 using MyLib.Utility;
 using Tetris3D.Utility;
 using Tetris3D.Components.DrawComps;
+using Tetris3D.Components.UpdateComps;
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -38,6 +39,8 @@ namespace Tetris3D.Scene.ScenePages
         private float cameraAngleXZ;
         private float cameraAngleXY;
 
+        private Timer creatTimer;
+        private static Random rand = new Random();
 
         public GamePlay(GameDevice gameDevice) {
             this.gameDevice = gameDevice;
@@ -48,6 +51,9 @@ namespace Tetris3D.Scene.ScenePages
             stageNo = 1;
 
             stage = new StageData();
+
+            creatTimer = new Timer(1);
+            creatTimer.Dt = new Timer.timerDelegate(CreatBox);
         }
 
         /// <summary>
@@ -92,7 +98,16 @@ namespace Tetris3D.Scene.ScenePages
 
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
-        
+
+        private void CreatBox() {
+            Transform trans = new Transform();
+            trans.Position = new Vector3(rand.Next(Parameter.StageMaxIndex), rand.Next(Parameter.StageMaxIndex), 10) * Parameter.BoxSize;
+            Entity box = Entity.CreateEntity("Box", "Box", trans);
+            box.RegisterComponent(new C_Model("Box"));
+            box.RegisterComponent(new C_DrawModel());
+            box.RegisterComponent(new C_BoxMoveUpdate());
+        }
+
         
         /// <summary>
         /// 更新
@@ -123,6 +138,8 @@ namespace Tetris3D.Scene.ScenePages
 
 
 
+            creatTimer.Update();
+
             //StageCheck
             if (inputState.IsDown(Keys.W, Buttons.LeftShoulder)) {
                 //Camera2D.ZoomIn();
@@ -147,7 +164,7 @@ namespace Tetris3D.Scene.ScenePages
 
             Camera3D.Update(cameraPosition);
 
-            Console.WriteLine(cameraPosition);
+            Console.WriteLine("XZ:" + cameraAngleXZ + ", XY:" + cameraAngleXY);
 
 
             Sound.PlayBGM("GamePlay");
