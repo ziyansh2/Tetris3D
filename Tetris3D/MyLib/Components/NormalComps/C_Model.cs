@@ -26,6 +26,10 @@ namespace MyLib.Components.NormalComps
             return world;
         }
 
+        public Matrix GetWorld(Vector3 position) {
+            world = Matrix.CreateTranslation(position);
+            return world;
+        }
 
         public override void Active()
         {

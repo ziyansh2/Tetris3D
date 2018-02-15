@@ -28,9 +28,9 @@ namespace Tetris3D.Scene.ScenePages
             inputState = gameDevice.GetInputState;
 
             buttons = new List<Button> {
-                new Button("Text_GameStart", new Vector2(Parameter.ScreenSize.X / 2, 680), new IWave_Y()),
-                new Button("Text_Operation", new Vector2(Parameter.ScreenSize.X / 2, 800), new INone()),
-                new Button("Text_StaffScroll", new Vector2(Parameter.ScreenSize.X / 2, 920), new INone())
+                new Button("Text_GameStart", new Vector2(Parameter.ScreenSize.X / 2, 430), new IWave_Y()),
+                new Button("Text_Operation", new Vector2(Parameter.ScreenSize.X / 2, 550), new INone()),
+                new Button("Text_StaffScroll", new Vector2(Parameter.ScreenSize.X / 2, 670), new INone())
             };
             selector = new Selector(3, false);
             selector.Initialize();

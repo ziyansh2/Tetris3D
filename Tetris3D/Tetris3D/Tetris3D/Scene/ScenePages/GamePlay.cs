@@ -1,9 +1,8 @@
-﻿//作成日：　2017.10.04
+﻿//作成日：　2018.02.04
 //作成者：　柏
 //クラス内容：　GamePlayシーン
 //修正内容リスト：
-//名前：柏　　　日付：20171011　　　内容：カメラ対応
-//名前：宮崎　　日付：20180205　　　内容：カメラのをCameraManagerに移した
+//名前：　　　日付：　　　内容：
 //名前：　　　日付：　　　内容：
 
 using System.Collections.Generic;
@@ -15,9 +14,11 @@ using MyLib.Components;
 using Tetris3D.Def;
 using MyLib.Components.DrawComps;
 using MyLib.Components.NormalComps;
-using Tetris3D.Components;
 using System;
 using MyLib.Utility;
+using Tetris3D.Utility;
+using Tetris3D.Components.DrawComps;
+using Tetris3D.Components.UpdateComps;
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -33,12 +34,13 @@ namespace Tetris3D.Scene.ScenePages
         private int stageNo;
 
         private Entity focus;
+        private StageData stage;
 
-        private _3DCameraManager cameraManager; 
+        private float cameraAngleXZ;
+        private float cameraAngleXY;
 
-        //test用
-        private Vector3 boxPosi;
-
+        private Timer creatTimer;
+        private static Random rand = new Random();
 
         public GamePlay(GameDevice gameDevice) {
             this.gameDevice = gameDevice;
@@ -47,6 +49,11 @@ namespace Tetris3D.Scene.ScenePages
 
             isPause = false;
             stageNo = 1;
+
+            stage = new StageData();
+
+            creatTimer = new Timer(1);
+            creatTimer.Dt = new Timer.timerDelegate(CreatBox);
         }
 
         /// <summary>
@@ -61,10 +68,13 @@ namespace Tetris3D.Scene.ScenePages
             focus.transform.Position = new Vector3(0, 0, 0);
             focus.Active();
 
+            cameraAngleXZ = 0;
+            cameraAngleXY = 0;
+
+            StageData.InitializeStage();
+
             //Debug用
             DebugInitialize();
-
-            cameraManager = new _3DCameraManager(gameDevice);
         }
 
         private void DebugInitialize() {
@@ -72,17 +82,14 @@ namespace Tetris3D.Scene.ScenePages
             CreatShaderTest();
 
             //CreateBox
-            Entity box = Entity.CreateEntity("Box", "Box", new Transform());
-            box.RegisterComponent(new C_Model("Box"));
-            box.RegisterComponent(new C_DrawModel());
-
-            boxPosi = box.transform.Position;
+            //Entity box = Entity.CreateEntity("Box", "Box", new Transform());
+            //box.RegisterComponent(new C_Model("Box"));
+            //box.RegisterComponent(new C_DrawModel());
 
             //CreateStage
-            //Entity pedestal = Entity.CreateEntity("Pedestal", "Pedestal", new Transform());
-            //pedestal.RegisterComponent(new C_Model("Pedestal"));
-            //pedestal.RegisterComponent(new C_DrawModel());
-
+            C_DrawStage draw = new C_DrawStage();
+            draw.Active();
+            TaskManager.AddTask(draw);
         }
 
         private void CreatShaderTest() {
@@ -91,7 +98,16 @@ namespace Tetris3D.Scene.ScenePages
 
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
-        
+
+        private void CreatBox() {
+            Transform trans = new Transform();
+            trans.Position = new Vector3(rand.Next(Parameter.StageMaxIndex), rand.Next(Parameter.StageMaxIndex), 10) * Parameter.BoxSize;
+            Entity box = Entity.CreateEntity("Box", "Box", trans);
+            box.RegisterComponent(new C_Model("Box"));
+            box.RegisterComponent(new C_DrawModel());
+            box.RegisterComponent(new C_BoxMoveUpdate());
+        }
+
         
         /// <summary>
         /// 更新
@@ -122,6 +138,8 @@ namespace Tetris3D.Scene.ScenePages
 
 
 
+            creatTimer.Update();
+
             //StageCheck
             if (inputState.IsDown(Keys.W, Buttons.LeftShoulder)) {
                 //Camera2D.ZoomIn();
@@ -132,7 +150,21 @@ namespace Tetris3D.Scene.ScenePages
 
 
             //CameraMoveCheck
-            cameraManager.Update();
+            if (inputState.IsDown(Keys.Left)) { cameraAngleXZ += 0.05f; }
+            if (inputState.IsDown(Keys.Right)) { cameraAngleXZ -= 0.05f; }
+            if (inputState.IsDown(Keys.Up)) { cameraAngleXY += 0.05f; }
+            if (inputState.IsDown(Keys.Down)) { cameraAngleXY -= 0.05f; }
+
+            //cameraAngle = Method.AngleClamp(cameraAngle);
+
+            Vector3 cameraPosition = new Vector3(
+                (float)Math.Cos(cameraAngleXZ), 
+                (float)Math.Sin(cameraAngleXY),
+                (float)Math.Sin(cameraAngleXZ)) * Parameter.DistanceFromStage;
+
+            Camera3D.Update(cameraPosition);
+
+            Console.WriteLine("XZ:" + cameraAngleXZ + ", XY:" + cameraAngleXY);
 
 
             Sound.PlayBGM("GamePlay");
@@ -144,9 +176,6 @@ namespace Tetris3D.Scene.ScenePages
         public void Draw() {
             //Renderer_2D.DrawString("ObjectsCount:" + EntityManager.GetEntityCount(), new Vector2(10, 520), Color.Red, 0.5f);
             //Renderer_2D.DrawString("ParticlesCount:" + gameDevice.GetParticlesCount(), new Vector2(10, 550), Color.Red, 0.5f);
-            //Renderer_2D.DrawString("cameraPosition:" + new Vector3(Camera3D.GetView().Translation.X, Camera3D.GetView().Translation.Y, Camera3D.GetView().Translation.Y), new Vector2(700, 100), Color.White);
-            //Renderer_2D.DrawString("boxPosition:" + boxPosi, new Vector2(700, 150), Color.White);
-            //Renderer_2D.DrawString("angle:" + cameraAngle, new Vector2(700, 200), Color.White);
         }
 
 
