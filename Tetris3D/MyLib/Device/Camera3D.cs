@@ -88,7 +88,8 @@ namespace MyLib.Device
 
         public static void Update(Vector3 targetPosition) {
             //view = Matrix.CreateLookAt(cameraPosition, targetPosition, Vector3.Up);
-            view = Matrix.CreateLookAt(targetPosition, Vector3.Zero, Vector3.Up);
+            InScreenClip(ref targetPosition);
+            view = Matrix.CreateLookAt(targetPosition, new Vector3(1000, 1000, 1000), Vector3.Up);
 
 
             //cameraRect = new Rectangle(
@@ -97,7 +98,6 @@ namespace MyLib.Device
             //    (int)screenSize.X,
             //    (int)screenSize.Y
             //);
-            //InScreenClip(ref targetPosition);
             //LocusSlowMove(ref targetPosition);
             //LocusTurnMove();
 
@@ -111,6 +111,26 @@ namespace MyLib.Device
             ////Shader描画できるEntityはEffect使って描画するため、Entityの映すPositionを算出
             //priviousOffset = offsetPosition;
             //offsetPosition = nowForcus - targetPosition;
+        }
+
+        private static void InScreenClip(ref Vector3 targetPosition)
+        {
+            if (cameraRect.Left <= 0)
+            {
+                targetPosition.X -= cameraRect.Left;
+            }
+            else if (cameraRect.Right >= stageSize.X)
+            {
+                targetPosition.X -= cameraRect.Right - stageSize.X;
+            }
+            if (cameraRect.Top <= 0)
+            {
+                targetPosition.Y -= cameraRect.Top;
+            }
+            else if (cameraRect.Bottom >= stageSize.Y)
+            {
+                targetPosition.Y -= cameraRect.Bottom - stageSize.Y;
+            }
         }
 
         private static void LocusTurnMove() {

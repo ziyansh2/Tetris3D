@@ -19,6 +19,7 @@ using MyLib.Utility;
 using Tetris3D.Utility;
 using Tetris3D.Components.DrawComps;
 using Tetris3D.Components.UpdateComps;
+using Tetris3D.Components.NormalComps;
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -38,6 +39,7 @@ namespace Tetris3D.Scene.ScenePages
 
         private float cameraAngleXZ;
         private float cameraAngleXY;
+        private CameraManager cameraManager;
 
         private Timer creatTimer;
         private static Random rand = new Random();
@@ -67,6 +69,7 @@ namespace Tetris3D.Scene.ScenePages
             focus = Entity.CreateEntity("Focus", "Forcus", new Transform());
             focus.transform.Position = new Vector3(0, 0, 0);
             focus.Active();
+            cameraManager = new CameraManager(gameDevice);
 
             cameraAngleXZ = 0;
             cameraAngleXY = 0;
@@ -94,8 +97,8 @@ namespace Tetris3D.Scene.ScenePages
 
         private void CreatShaderTest() {
             Entity test = Entity.CreateEntity("Test","Test", new Transform());
-            test.transform.Position = new Vector3(0, 0,0);
-
+            test.transform.Position = new Vector3(0,500,0);
+            
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
 
@@ -133,8 +136,8 @@ namespace Tetris3D.Scene.ScenePages
                 Initialize();
                 return;
             }
-            Vector2 position = new Vector2(focus.transform.Position.X, focus.transform.Position.Y);
-            Camera2D.Update(position);
+            //Vector2 position = new Vector2(focus.transform.Position.X , focus.transform.Position.Y);
+            //Camera2D.Update(position);
 
 
 
@@ -150,19 +153,20 @@ namespace Tetris3D.Scene.ScenePages
 
 
             //CameraMoveCheck
-            if (inputState.IsDown(Keys.Left)) { cameraAngleXZ += 0.05f; }
-            if (inputState.IsDown(Keys.Right)) { cameraAngleXZ -= 0.05f; }
-            if (inputState.IsDown(Keys.Up)) { cameraAngleXY += 0.05f; }
-            if (inputState.IsDown(Keys.Down)) { cameraAngleXY -= 0.05f; }
+            //if (inputState.IsDown(Keys.Left)) { cameraAngleXZ += 0.05f; }
+            //if (inputState.IsDown(Keys.Right)) { cameraAngleXZ -= 0.05f; }
+            //if (inputState.IsDown(Keys.Up)) { cameraAngleXY += 0.05f; }
+            //if (inputState.IsDown(Keys.Down)) { cameraAngleXY -= 0.05f; }
 
             //cameraAngle = Method.AngleClamp(cameraAngle);
 
-            Vector3 cameraPosition = new Vector3(
-                (float)Math.Cos(cameraAngleXZ), 
-                (float)Math.Sin(cameraAngleXY),
-                (float)Math.Sin(cameraAngleXZ)) * Parameter.DistanceFromStage;
+            //Vector3 cameraPosition = new Vector3(
+            //    (float)Math.Cos(cameraAngleXZ), 
+            //    (float)Math.Sin(cameraAngleXY),
+            //    (float)Math.Sin(cameraAngleXZ)) * Parameter.DistanceFromStage;
 
-            Camera3D.Update(cameraPosition);
+            //Camera3D.Update(cameraPosition);
+            cameraManager.Update(focus);
 
             Console.WriteLine("XZ:" + cameraAngleXZ + ", XY:" + cameraAngleXY);
 

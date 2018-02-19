@@ -68,7 +68,7 @@ namespace MyLib.Device
         public static void Initialize() {
             cameraRect = new Rectangle(0, 0, (int)screenSize.X, (int)screenSize.Y);
             Vector2 targetPosition = screenSize / 2;
-            InScreenClip(ref targetPosition);
+            //InScreenClip(ref targetPosition);
 
             //2Dカメラ処理(ZoomInの状況に合わせて移動)
             transform =

@@ -92,13 +92,13 @@ namespace Tetris3D
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Blue);
 
             base.Draw(gameTime);
 
             TaskManager.Draw();
 
-            Renderer_2D.Begin();
+            Renderer_2D.BeginBlend(Camera2D.GetTransform());
             sceneManager.Draw();
             Renderer_2D.End();
 
