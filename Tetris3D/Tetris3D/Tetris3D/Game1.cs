@@ -92,7 +92,7 @@ namespace Tetris3D
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CadetBlue);
 
             base.Draw(gameTime);
 

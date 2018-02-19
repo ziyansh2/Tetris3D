@@ -25,7 +25,7 @@ namespace Tetris3D.Def
         public static Vector2 FrameRB = ScreenSize;
 
         public static float DistanceFromStage = 2500;
-        public static int StageMaxIndex = 4;
+        public static int StageMaxIndex = 7;
         public static int BoxSize = 10;
     }
 }

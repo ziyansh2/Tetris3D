@@ -2,7 +2,7 @@
 //作成者：　柏
 //クラス内容：　StageDataにより描画
 //修正内容リスト：
-//名前：　　　日付：　　　内容：
+//名前：柏　　　日付：2018.02.19　　　内容：Boxの削除待ち追加
 //名前：　　　日付：　　　内容：
 
 using Microsoft.Xna.Framework;
@@ -22,6 +22,7 @@ namespace Tetris3D.Components.DrawComps
         private static int maxIndex = Parameter.StageMaxIndex;
         private C_Model[,,] models = new C_Model[maxIndex, maxIndex, maxIndex];
         private Entity pedestal;
+        private int timer;
 
         public C_DrawStage(float depth = -1, float alpha = 1)
         {
@@ -30,12 +31,20 @@ namespace Tetris3D.Components.DrawComps
         }
         public override void Draw()
         {
+            timer++;
+            Method.Warp(0, 600, ref timer);
             if (models[0, 0, 0] == null) { return; }
             int boxSize = Parameter.BoxSize;
             Method.MyForeach((x, y, z) => {
                 if (StageData.IsBlock(x, y, z)) {
                     Vector3 position = new Vector3(x, y, z) * boxSize;
                     Modeler.DrawModel(models[z, y, x].GetModel, models[z, y, x].GetWorld(position));
+                }
+                else if (StageData.IsWaitOff(x, y, z)) {
+                    if ((timer / 5) % 2 == 0) {
+                        Vector3 position = new Vector3(x, y, z) * boxSize;
+                        Modeler.DrawModel(models[z, y, x].GetModel, models[z, y, x].GetWorld(position));
+                    }
                 }
             }, Vector3.One * maxIndex);
             
