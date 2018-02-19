@@ -142,16 +142,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="IMAGE\Page_Operation.jpg">
-      <Name>Page_Operation</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="IMAGE\Page_StaffScroll.jpg">
-      <Name>Page_StaffScroll</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMAGE\TestImg.png">
@@ -311,6 +301,18 @@
   <ItemGroup>
     <Compile Include="IMAGE\UI_BackGround.png">
       <Name>UI_BackGround</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IMAGE\Page_Operation.png">
+      <Name>Page_Operation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="IMAGE\Page_StaffScroll.png">
+      <Name>Page_StaffScroll</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -7,7 +7,6 @@
 
 using Microsoft.Xna.Framework;
 using MyLib.Components;
-using MyLib.Device;
 using MyLib.Utility;
 using System.Collections.Generic;
 using Tetris3D.Def;
@@ -27,8 +26,17 @@ namespace Tetris3D.Utility
         private static int[,,] stageData = new int[maxIndex, maxIndex, maxIndex];
         private static int combo;
 
+        private static List<Vector3> checkDirect = new List<Vector3>();
+
         public StageData() {
             InitializeStage();
+
+            checkDirect.Add(new Vector3(-1,  0,  0));
+            checkDirect.Add(new Vector3( 1,  0,  0));
+            checkDirect.Add(new Vector3( 0, -1,  0));
+            checkDirect.Add(new Vector3( 0,  1,  0));
+            checkDirect.Add(new Vector3( 0,  0, -1));
+            checkDirect.Add(new Vector3( 0,  0,  1));
         }
 
         public static void InitializeStage() {
@@ -65,6 +73,15 @@ namespace Tetris3D.Utility
             return stageData[z, y, x] == (int)eBoxState.On;
         }
 
+        public static bool IsBlock(float x, float y, float z) {
+            if (x < 0 || x >= maxIndex) { return true; }
+            if (y < 0 || y >= maxIndex) { return true; }
+            if (z < 0) { return true; }
+            if (z >= maxIndex) { return false; }
+
+            return stageData[(int)z, (int)y, (int)x] == (int)eBoxState.On;
+        }
+
         public static bool IsWaitOff(int x, int y, int z) {
             return stageData[z, y, x] == (int)eBoxState.OffWait;
         }
@@ -72,31 +89,99 @@ namespace Tetris3D.Utility
         public static List<int[]> GetRemoveData() {
             List<int[]> data = new List<int[]>();
 
-            data.AddRange(CheckRemoveData_X());
-            data.AddRange(CheckRemoveData_Y());
-            data.AddRange(CheckRemoveData_Z());
+            //data.AddRange(CheckRemoveData_X());
+            //data.AddRange(CheckRemoveData_Y());
+            //data.AddRange(CheckRemoveData_Z());
 
-            if (combo != 0) {
-                GameConst.SetNowCombo(combo);
-                combo = 0;
-            }
+            //if (combo != 0) {
+            //    GameConst.SetNowCombo(combo);
+            //    combo = 0;
+            //}
 
             //重複削除
-            for (int i = 0; i < data.Count; i++) {
-                for (int j = i + 1; j < data.Count; j++) {
-                    if (data[i].Equals(data[j])) {
-                        data.RemoveAt(i);
-                        i--;
-                        j = data.Count;
-                        GameConst.AddScore(-10);
-                    }
-                }
+            //for (int i = 0; i < data.Count; i++) {
+            //    for (int j = i + 1; j < data.Count; j++) {
+            //        if (data[i].Equals(data[j])) {
+            //            data.RemoveAt(i);
+            //            i--;
+            //            j = data.Count;
+            //            GameConst.AddScore(-10);
+            //        }
+            //    }
+            //}
+
+            List<int> floorFulls = CheckFloorFull();
+            for (int i = 0; i < floorFulls.Count; i++) {
+                Method.MyForeach((x, y) =>
+                {
+                    data.Add(new int[] { x, y, floorFulls[i] });
+                }, Vector2.One * Parameter.StageMaxIndex);
             }
+
             return data;
         }
 
 
+        #region CheckFun
 
+        //満タンになったフロアをチェックして返す
+        public static List<int> CheckFloorFull() {
+            List<int> fullFloors = new List<int>();
+
+            for (int z = 0; z < maxIndex; z++) {
+                for (int y = 0; y < maxIndex; y++) {
+                    for (int x = 0; x < maxIndex; x++) {
+                        if (!IsBlock(x, y, z)) {
+                            y = maxIndex;
+                            x = maxIndex;
+                        }
+                        if (y == maxIndex - 1 && x == maxIndex - 1) {
+                            fullFloors.Add(z);
+                        }
+                    }
+                }
+            }
+
+            return fullFloors;
+        }
+
+        public static List<int[]> CheckRemoveData(int[] startPoint) {
+            List<int[]> data = new List<int[]>();
+            data.Add(startPoint);
+
+            for (int i = 0; i < data.Count; i++) {
+                checkDirect.ForEach(c => {
+                    int x = (int)Method.Clamp(0, Parameter.StageMaxIndex - 1, data[i][0] + (int)c.X);
+                    int y = (int)Method.Clamp(0, Parameter.StageMaxIndex - 1, data[i][1] + (int)c.Y);
+                    int z = (int)Method.Clamp(0, Parameter.StageMaxIndex - 1, data[i][2] + (int)c.Z);
+
+                    int[] point = new int[]{ x, y, z };
+                    if (IsBlock(point[0], point[1], point[2])) {
+                        bool putInAble = true;
+                        data.ForEach(d => {
+                            if (point[0] == d[0] &&
+                                point[1] == d[1] &&
+                                point[2] == d[2])
+                            {
+                                putInAble = false;
+                                return;
+                            }
+                        });
+                        if (putInAble) { data.Add(point); }
+                    }
+                });
+            }
+
+            if (data.Count < 4) { data.Clear(); }
+            GameConst.AddScore(data.Count * 10);
+            return data;
+        }
+
+
+        #endregion
+
+
+        #region OldCheckFun
         private static List<int[]> CheckRemoveData_X() {
             List<int[]> data = new List<int[]>();
 
@@ -225,7 +310,7 @@ namespace Tetris3D.Utility
 
             return data;
         }
-
+        #endregion
 
         public static int[,,] GetStageData() {
             return stageData;

@@ -199,6 +199,12 @@ namespace MyLib.Utility
             value = Math.Min(max, Math.Max(value, min));
         }
 
+        public static float Clamp(float min, float max, float value)
+        {
+            value = Math.Min(max, Math.Max(value, min));
+            return value;
+        }
+
         public static int MinClamp(int bezierIndex, int min)
         {
             return Math.Max(bezierIndex, min);

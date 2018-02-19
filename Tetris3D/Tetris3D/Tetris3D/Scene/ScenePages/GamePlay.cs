@@ -90,7 +90,7 @@ namespace Tetris3D.Scene.ScenePages
 
         private void CreatShaderTest() {
             Entity test = Entity.CreateEntity("Test","Test", new Transform());
-            test.transform.Position = new Vector3(0, 0,0);
+            test.transform.Position = new Vector3(0, 0, 0);
 
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
@@ -163,7 +163,6 @@ namespace Tetris3D.Scene.ScenePages
             Camera3D.Update(cameraPosition);
 
             Console.WriteLine("XZ:" + cameraAngleXZ + ", XY:" + cameraAngleXY);
-
 
             Sound.PlayBGM("GamePlay");
         }

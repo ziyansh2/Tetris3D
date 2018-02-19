@@ -20,11 +20,9 @@ namespace Tetris3D.Components.DrawComps
             this.depth = depth;
 
         }
-        public override void Draw()
-        {
+        public override void Draw() {
             Renderer_2D.Begin();
 
-            
             Renderer_2D.DrawTexture("UI_BackGround", Vector2.Zero);
             Renderer_2D.DrawString("Score : " + GameConst.Score, new Vector2(1050, 80), Color.White, 1);
             Renderer_2D.DrawString("Combo : " + GameConst.Combo, new Vector2(1050, 130), Color.White, 1);
@@ -33,15 +31,12 @@ namespace Tetris3D.Components.DrawComps
             Renderer_2D.End();
         }
 
-        public override void Active()
-        {
+        public override void Active() {
             base.Active();
             //TODO 更新コンテナに自分を入れる
-
         }
 
-        public override void DeActive()
-        {
+        public override void DeActive() {
             base.DeActive();
             //TODO 更新コンテナから自分を削除
         }
