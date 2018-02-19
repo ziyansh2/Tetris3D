@@ -2,10 +2,10 @@
 //作成者：　柏
 //クラス内容：　GamePlayシーン
 //修正内容リスト：
-//名前：　　　日付：　　　内容：
+//名前：柏　　　日付：2018.02.19　　　内容：Boxの生成を一個ずつに
+//名前：柏　　　日付：2018.02.19　　　内容：UI描画追加
 //名前：　　　日付：　　　内容：
 
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MyLib.Device;
@@ -15,10 +15,10 @@ using Tetris3D.Def;
 using MyLib.Components.DrawComps;
 using MyLib.Components.NormalComps;
 using System;
-using MyLib.Utility;
 using Tetris3D.Utility;
 using Tetris3D.Components.DrawComps;
 using Tetris3D.Components.UpdateComps;
+using MyLib.Utility;
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -39,7 +39,6 @@ namespace Tetris3D.Scene.ScenePages
         private float cameraAngleXZ;
         private float cameraAngleXY;
 
-        private Timer creatTimer;
         private static Random rand = new Random();
 
         public GamePlay(GameDevice gameDevice) {
@@ -52,8 +51,6 @@ namespace Tetris3D.Scene.ScenePages
 
             stage = new StageData();
 
-            creatTimer = new Timer(1);
-            creatTimer.Dt = new Timer.timerDelegate(CreatBox);
         }
 
         /// <summary>
@@ -68,6 +65,10 @@ namespace Tetris3D.Scene.ScenePages
             focus.transform.Position = new Vector3(0, 0, 0);
             focus.Active();
 
+            C_DrawGameUI uiDraw = new C_DrawGameUI();
+            uiDraw.Active();
+            TaskManager.AddTask(uiDraw);
+
             cameraAngleXZ = 0;
             cameraAngleXY = 0;
 
@@ -80,11 +81,6 @@ namespace Tetris3D.Scene.ScenePages
         private void DebugInitialize() {
             //ShaderTest用
             CreatShaderTest();
-
-            //CreateBox
-            //Entity box = Entity.CreateEntity("Box", "Box", new Transform());
-            //box.RegisterComponent(new C_Model("Box"));
-            //box.RegisterComponent(new C_DrawModel());
 
             //CreateStage
             C_DrawStage draw = new C_DrawStage();
@@ -100,12 +96,15 @@ namespace Tetris3D.Scene.ScenePages
         }
 
         private void CreatBox() {
+            if (!GameConst.CanCreateBox) { return; }
             Transform trans = new Transform();
             trans.Position = new Vector3(rand.Next(Parameter.StageMaxIndex), rand.Next(Parameter.StageMaxIndex), 10) * Parameter.BoxSize;
             Entity box = Entity.CreateEntity("Box", "Box", trans);
             box.RegisterComponent(new C_Model("Box"));
             box.RegisterComponent(new C_DrawModel());
-            box.RegisterComponent(new C_BoxMoveUpdate());
+            box.RegisterComponent(new C_BoxMoveUpdate(gameDevice));
+
+            GameConst.CanCreateBox = false;
         }
 
         
@@ -136,9 +135,8 @@ namespace Tetris3D.Scene.ScenePages
             Vector2 position = new Vector2(focus.transform.Position.X, focus.transform.Position.Y);
             Camera2D.Update(position);
 
-
-
-            creatTimer.Update();
+            //CreateBox
+            CreatBox();
 
             //StageCheck
             if (inputState.IsDown(Keys.W, Buttons.LeftShoulder)) {

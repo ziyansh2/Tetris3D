@@ -57,9 +57,11 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\DrawComps\C_DrawGameUI.cs" />
     <Compile Include="Components\DrawComps\C_DrawScrollLayer.cs" />
     <Compile Include="Components\DrawComps\C_DrawStage.cs" />
     <Compile Include="Components\UpdateComps\C_BoxMoveUpdate.cs" />
+    <Compile Include="Components\UpdateComps\C_OffWaitBox.cs" />
     <Compile Include="Utility\StageData.cs" />
     <Compile Include="Def\GameConst.cs" />
     <Compile Include="Def\Parameter.cs" />
