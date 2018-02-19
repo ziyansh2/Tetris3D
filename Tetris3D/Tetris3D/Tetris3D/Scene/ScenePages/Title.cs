@@ -61,13 +61,11 @@ namespace Tetris3D.Scene.ScenePages
         }
 
         private void InputCheck() {
-            if (inputState.WasDown(InputParameter.ConfirmKey, InputParameter.ConfirmButton))
-            {
+            if (inputState.WasDown(InputParameter.ConfirmKey, InputParameter.ConfirmButton)) {
                 Sound.PlaySE("Laser");
                 isEnd = true;
             }
-            if (inputState.WasDown(InputParameter.DownKey, InputParameter.DownButton))
-            {
+            if (inputState.WasDown(InputParameter.DownKey, InputParameter.DownButton)) {
                 buttons[selector.GetSelection()].SetAction(new INone());
 
                 selector.ToNext();
@@ -75,8 +73,7 @@ namespace Tetris3D.Scene.ScenePages
 
                 Sound.PlaySE("Shoot");
             }
-            if (inputState.WasDown(InputParameter.UpKey, InputParameter.UpButton))
-            {
+            if (inputState.WasDown(InputParameter.UpKey, InputParameter.UpButton)) {
                 buttons[selector.GetSelection()].SetAction(new INone());
 
                 selector.ToBehind();
