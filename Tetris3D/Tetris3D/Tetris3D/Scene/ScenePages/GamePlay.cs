@@ -19,9 +19,11 @@ using Tetris3D.Utility;
 using Tetris3D.Components.DrawComps;
 using Tetris3D.Components.UpdateComps;
 using MyLib.Utility;
+using Tetris3D.Components.NormalComps;
 
 namespace Tetris3D.Scene.ScenePages
 {
+
     class GamePlay : IScene
     {
         private GameDevice gameDevice;
@@ -99,8 +101,12 @@ namespace Tetris3D.Scene.ScenePages
             if (!GameConst.CanCreateBox) { return; }
             Transform trans = new Transform();
             trans.Position = new Vector3(rand.Next(Parameter.StageMaxIndex), rand.Next(Parameter.StageMaxIndex), 10) * Parameter.BoxSize;
-            Entity box = Entity.CreateEntity("Box", "Box", trans);
-            box.RegisterComponent(new C_Model("Box"));
+
+            int type = rand.Next(3);
+            string name = ((eBoxType)type).ToString();
+
+            Entity box = Entity.CreateEntity(name, name, trans);
+            box.RegisterComponent(new C_Model(name));
             box.RegisterComponent(new C_DrawModel());
             box.RegisterComponent(new C_BoxMoveUpdate(gameDevice));
 
