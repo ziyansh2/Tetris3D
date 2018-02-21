@@ -75,6 +75,7 @@
     <Compile Include="Components\MoveComponent.cs" />
     <Compile Include="Components\NormalComps\C_Energy.cs" />
     <Compile Include="Components\NormalComps\C_Model.cs" />
+    <Compile Include="Components\NormalComps\C_Models.cs" />
     <Compile Include="Components\NormalComps\C_Switch3.cs" />
     <Compile Include="Components\TaskManager.cs" />
     <Compile Include="Components\UpdateComponent.cs" />
