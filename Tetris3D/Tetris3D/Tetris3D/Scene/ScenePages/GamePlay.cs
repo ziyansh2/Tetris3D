@@ -18,12 +18,10 @@ using System;
 using Tetris3D.Utility;
 using Tetris3D.Components.DrawComps;
 using Tetris3D.Components.UpdateComps;
-using MyLib.Utility;
-<<<<<<< HEAD
+
 using System.Collections.Generic;
-=======
 using Tetris3D.Components.NormalComps;
->>>>>>> master
+
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -101,14 +99,11 @@ namespace Tetris3D.Scene.ScenePages
             TaskManager.AddTask(draw);
         }
 
-<<<<<<< HEAD
+
         private void CreatShaderTest()
         {
             Entity test = Entity.CreateEntity("Test", "Test", new Transform());
-=======
-        private void CreatShaderTest() {
-            Entity test = Entity.CreateEntity("Test","Test", new Transform());
->>>>>>> master
+
             test.transform.Position = new Vector3(0, 0, 0);
 
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
@@ -134,20 +129,18 @@ namespace Tetris3D.Scene.ScenePages
         private void CreatBox(Vector3 position)
         {
             Transform trans = new Transform();
-<<<<<<< HEAD
-            trans.Position = position;
 
-            Entity box = Entity.CreateEntity("Box", "Box", trans);
-            box.RegisterComponent(new C_Model("Box"));
-=======
-            trans.Position = new Vector3(rand.Next(Parameter.StageMaxIndex), rand.Next(Parameter.StageMaxIndex), 10) * Parameter.BoxSize;
+            trans.Position = position;
 
             int type = rand.Next(3);
             string name = ((eBoxType)type).ToString();
 
             Entity box = Entity.CreateEntity(name, name, trans);
             box.RegisterComponent(new C_Model(name));
->>>>>>> master
+
+            //Entity box = Entity.CreateEntity("Box", "Box", trans);
+            //box.RegisterComponent(new C_Model("Box"));
+
             box.RegisterComponent(new C_DrawModel());
             box.RegisterComponent(new C_BoxMoveUpdate(gameDevice));
 
