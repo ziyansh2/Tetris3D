@@ -19,6 +19,7 @@ using Tetris3D.Utility;
 using Tetris3D.Components.DrawComps;
 using Tetris3D.Components.UpdateComps;
 using MyLib.Utility;
+using System.Collections.Generic;
 
 namespace Tetris3D.Scene.ScenePages
 {
@@ -40,8 +41,11 @@ namespace Tetris3D.Scene.ScenePages
         private float cameraAngleXY;
 
         private static Random rand = new Random();
+        private int num;
+        private C_Models models;
 
-        public GamePlay(GameDevice gameDevice) {
+        public GamePlay(GameDevice gameDevice)
+        {
             this.gameDevice = gameDevice;
 
             inputState = gameDevice.GetInputState;
@@ -56,7 +60,8 @@ namespace Tetris3D.Scene.ScenePages
         /// <summary>
         /// 初期化
         /// </summary>
-        public void Initialize() {
+        public void Initialize()
+        {
             isEnd = false;
             isPause = false;
             GameConst.Initialize();
@@ -74,11 +79,14 @@ namespace Tetris3D.Scene.ScenePages
 
             StageData.InitializeStage();
 
+            models = new C_Models();
+
             //Debug用
             DebugInitialize();
         }
 
-        private void DebugInitialize() {
+        private void DebugInitialize()
+        {
             //ShaderTest用
             CreatShaderTest();
 
@@ -88,45 +96,66 @@ namespace Tetris3D.Scene.ScenePages
             TaskManager.AddTask(draw);
         }
 
-        private void CreatShaderTest() {
-            Entity test = Entity.CreateEntity("Test","Test", new Transform());
-            test.transform.Position = new Vector3(0, 0,0);
+        private void CreatShaderTest()
+        {
+            Entity test = Entity.CreateEntity("Test", "Test", new Transform());
+            test.transform.Position = new Vector3(0, 0, 0);
 
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
 
-        private void CreatBox() {
+        public void BoxUpdate()
+        {
+            focus.ClearVoidComponent();
+
             if (!GameConst.CanCreateBox) { return; }
+            num = rand.Next(1, 5);
+
+            List<Vector3> data = models.GetList(num);
+            Vector3 creatsPosition = new Vector3(rand.Next(Parameter.StageMaxIndex - models.GetListX()), rand.Next(Parameter.StageMaxIndex - models.GetListY()), 10) * Parameter.BoxSize;
+            data.ForEach(d =>
+            {
+                CreatBox(creatsPosition + d * Parameter.BoxSize);
+            });
+
+            GameConst.CanCreateBox = false;
+        }
+
+        private void CreatBox(Vector3 position)
+        {
             Transform trans = new Transform();
-            trans.Position = new Vector3(rand.Next(Parameter.StageMaxIndex), rand.Next(Parameter.StageMaxIndex), 10) * Parameter.BoxSize;
+            trans.Position = position;
+
             Entity box = Entity.CreateEntity("Box", "Box", trans);
             box.RegisterComponent(new C_Model("Box"));
             box.RegisterComponent(new C_DrawModel());
             box.RegisterComponent(new C_BoxMoveUpdate(gameDevice));
 
-            GameConst.CanCreateBox = false;
         }
 
-        
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="gameTime">時間</param>
-        public void Update(GameTime gameTime) {
+        public void Update(GameTime gameTime)
+        {
             if (isEnd) { return; }
-            if (inputState.WasDown(Keys.P, Buttons.X)) {
+            if (inputState.WasDown(Keys.P, Buttons.X))
+            {
                 TaskManager.ChangePause();
                 isPause = !isPause;
             }
             if (isPause) { return; }
 
-            if (GameConst.IsEnding) {
+            if (GameConst.IsEnding)
+            {
                 next = E_Scene.ENDING;
                 isEnd = true;
                 return;
             }
 
-            if (GameConst.IsClear) {
+            if (GameConst.IsClear)
+            {
                 stageNo++;
                 Shutdown();
                 Initialize();
@@ -136,13 +165,16 @@ namespace Tetris3D.Scene.ScenePages
             Camera2D.Update(position);
 
             //CreateBox
-            CreatBox();
+            BoxUpdate();
+
 
             //StageCheck
-            if (inputState.IsDown(Keys.W, Buttons.LeftShoulder)) {
+            if (inputState.IsDown(Keys.W, Buttons.LeftShoulder))
+            {
                 //Camera2D.ZoomIn();
             }
-            if (inputState.IsDown(Keys.S, Buttons.RightShoulder)) {
+            if (inputState.IsDown(Keys.S, Buttons.RightShoulder))
+            {
                 //Camera2D.ZoomOut();
             }
 
@@ -156,7 +188,7 @@ namespace Tetris3D.Scene.ScenePages
             //cameraAngle = Method.AngleClamp(cameraAngle);
 
             Vector3 cameraPosition = new Vector3(
-                (float)Math.Cos(cameraAngleXZ), 
+                (float)Math.Cos(cameraAngleXZ),
                 (float)Math.Sin(cameraAngleXY),
                 (float)Math.Sin(cameraAngleXZ)) * Parameter.DistanceFromStage;
 
@@ -171,7 +203,8 @@ namespace Tetris3D.Scene.ScenePages
         /// <summary>
         /// 描画
         /// </summary>
-        public void Draw() {
+        public void Draw()
+        {
             //Renderer_2D.DrawString("ObjectsCount:" + EntityManager.GetEntityCount(), new Vector2(10, 520), Color.Red, 0.5f);
             //Renderer_2D.DrawString("ParticlesCount:" + gameDevice.GetParticlesCount(), new Vector2(10, 550), Color.Red, 0.5f);
         }
@@ -180,7 +213,8 @@ namespace Tetris3D.Scene.ScenePages
         /// <summary>
         /// シーンを閉める
         /// </summary>
-        public void Shutdown() {
+        public void Shutdown()
+        {
             gameDevice.GetParticleGroup.Clear();
             TaskManager.CloseAllTask();
             EntityManager.Clear();
