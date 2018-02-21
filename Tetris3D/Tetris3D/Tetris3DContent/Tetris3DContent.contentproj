@@ -53,6 +53,7 @@
       <Name>ResourceList</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+<<<<<<< HEAD
     <Compile Include="MODEL\green.FBX">
       <Name>green</Name>
       <Importer>FbxImporter</Importer>
@@ -65,6 +66,20 @@
     </Compile>
     <Compile Include="MODEL\yellow.FBX">
       <Name>yellow</Name>
+=======
+    <Compile Include="MODEL\Green.FBX">
+      <Name>Green</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="MODEL\Red.FBX">
+      <Name>Red</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="MODEL\Yellow.FBX">
+      <Name>Yellow</Name>
+>>>>>>> master
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
@@ -326,6 +341,18 @@
   <ItemGroup>
     <Compile Include="IMAGE\UI_BackGround.png">
       <Name>UI_BackGround</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IMAGE\Page_Operation.png">
+      <Name>Page_Operation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="IMAGE\Page_StaffScroll.png">
+      <Name>Page_StaffScroll</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
