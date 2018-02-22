@@ -27,11 +27,6 @@ namespace Tetris3D.Components.UpdateComps
         private InputState inputState;
         private GameDevice gameDevice;
         private bool isBomb;
-        private static Dictionary<string, eBoxType> typeChange = new Dictionary<string, eBoxType>() {
-            { "Yellow", eBoxType.Yellow },
-            { "Green", eBoxType.Green },
-            { "Red", eBoxType.Red },
-        };
 
         public C_BoxMoveUpdate(GameDevice gameDevice) {
             this.gameDevice = gameDevice;
@@ -103,7 +98,7 @@ namespace Tetris3D.Components.UpdateComps
                 int y = (int)point.Y;
                 int z = (int)point.Z;
                 if (StageData.IsBlock(x, y, z - 1) || StageData.IsBlockWaitOff(x, y, z - 1)) {
-                    StageData.SetBlockType(x, y, z, typeChange[entity.GetName()]);
+                    StageData.SetBlockType(x, y, z, StageData.TypeChange[entity.GetName()]);
                     StageData.SetBlockOn(x, y, z);
                     entity.DeActive();
                     Sound.PlaySE("Laser");

@@ -109,41 +109,46 @@ namespace Tetris3D.Scene.ScenePages
             test.RegisterComponent(new C_DrawWithShader("TestImg", "UIMask", Vector2.Zero, 100));   //TestMask
         }
 
-        public void BoxUpdate()
-        {
-            focus.ClearVoidComponent();
-
+        public void BoxUpdate() {
+            //focus.ClearVoidComponent();
             if (!GameConst.CanCreateBox) { return; }
             num = rand.Next(1, 5);
 
             List<Vector3> data = models.GetList(num);
-            Vector3 creatsPosition = new Vector3(rand.Next(Parameter.StageMaxIndex - models.GetListX()), rand.Next(Parameter.StageMaxIndex - models.GetListY()), 10) * Parameter.BoxSize;
-            data.ForEach(d =>
-            {
-                CreatBox(creatsPosition + d * Parameter.BoxSize);
+            Vector3 creatsPosition = new Vector3(
+                rand.Next(Parameter.StageMaxIndex - models.GetListX()), 
+                rand.Next(Parameter.StageMaxIndex - models.GetListY()), 
+                10) * Parameter.BoxSize;
+
+            List<C_BoxStatus> statuses = new List<C_BoxStatus>();
+
+            data.ForEach(d =>{
+                statuses.Add(CreatBox(creatsPosition + d * Parameter.BoxSize));
             });
+
+            C_OneTetris tetris = new C_OneTetris(gameDevice, statuses);
+            tetris.Active();
+            TaskManager.AddTask(tetris);
 
             GameConst.CanCreateBox = false;
         }
 
-        private void CreatBox(Vector3 position)
+        private C_BoxStatus CreatBox(Vector3 position)
         {
             Transform trans = new Transform();
-
             trans.Position = position;
 
             int type = rand.Next(3);
             string name = ((eBoxType)type).ToString();
 
             Entity box = Entity.CreateEntity(name, name, trans);
+            C_BoxStatus status = new C_BoxStatus(eBoxState.On, StageData.TypeChange[name], position / Parameter.BoxSize);
+            box.RegisterComponent(status);
             box.RegisterComponent(new C_Model(name));
-
-            //Entity box = Entity.CreateEntity("Box", "Box", trans);
-            //box.RegisterComponent(new C_Model("Box"));
-
             box.RegisterComponent(new C_DrawModel());
-            box.RegisterComponent(new C_BoxMoveUpdate(gameDevice));
+            //box.RegisterComponent(new C_BoxMoveUpdate(gameDevice));
 
+            return status;
         }
 
         /// <summary>
