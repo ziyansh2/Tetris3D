@@ -23,6 +23,12 @@ namespace Tetris3D.Utility
 
         private static List<Vector3> checkDirect = new List<Vector3>();
 
+        public static Dictionary<string, eBoxType> TypeChange = new Dictionary<string, eBoxType>() {
+            { "Yellow", eBoxType.Yellow },
+            { "Green", eBoxType.Green },
+            { "Red", eBoxType.Red },
+        };
+
         public StageData() {
             InitializeStage();
 
@@ -41,32 +47,50 @@ namespace Tetris3D.Utility
             combo = 0;
         }
 
-        public static C_BoxStatus GetBlockData(int x, int y, int z) { return stageData[z, y, x]; }
-        public static eBoxType GetBlockType(int x, int y, int z) { return stageData[z, y, x].Type; }
+        public static C_BoxStatus GetBlockData(int x, int y, int z) {
+            if (z >= maxIndex) { return new C_BoxStatus(eBoxState.Off, eBoxType.None, Vector3.Zero); }
+            return stageData[z, y, x];
+        }
+        public static eBoxType GetBlockType(int x, int y, int z) {
+            if (z >= maxIndex) { return eBoxType.None; }
+            return stageData[z, y, x].Type;
+        }
 
         #region Set
         public static void SetBlockData(int x, int y, int z, C_BoxStatus data) {
+            if (z >= maxIndex) { return; }
+            if (x >= maxIndex) { return; }
+            if (y >= maxIndex) { return; }
             stageData[z, y, x].State = data.State;
             stageData[z, y, x].Type = data.Type;
         }
 
         public static void SetBlockType(int x, int y, int z, eBoxType type) {
+            if (z >= maxIndex) { return; }
+            if (x >= maxIndex) { return; }
+            if (y >= maxIndex) { return; }
             stageData[z, y, x].Type = type;
         }
 
         public static void SetBlockOn(int x, int y, int z) {
             if (z >= maxIndex) { return; }
+            if (x >= maxIndex) { return; }
+            if (y >= maxIndex) { return; }
             stageData[z, y, x].State = eBoxState.On;
         }
 
         public static void SetBlockOff(int x, int y, int z) {
             if (z >= maxIndex) { return; }
+            if (x >= maxIndex) { return; }
+            if (y >= maxIndex) { return; }
             stageData[z, y, x].State = eBoxState.Off;
             stageData[z, y, x].Type = eBoxType.None;
         }
 
         public static void SetBlockOffWait(int x, int y, int z) {
             if (z >= maxIndex) { return; }
+            if (x >= maxIndex) { return; }
+            if (y >= maxIndex) { return; }
             stageData[z, y, x].State = eBoxState.OffWait;
         }
         #endregion
